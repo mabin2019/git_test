@@ -1,5 +1,6 @@
 This is a check file created to check push.
 This is a line added from MASTER
+This is a second line added from MASTER after the second line added from branch1
 This is added later
 This line is added from branch1
 This is second line added from branch1
