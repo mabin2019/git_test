@@ -8,3 +8,4 @@ This line is added from Branch
 This line is added from BRANCH2
 This is a second line added from branch2
 This is the second line added from branch1
+This is the last line being added from MASTER
