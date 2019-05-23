@@ -1,3 +1,4 @@
+import time
 board=[i+1 for i in range(9)]
 
 def print_board():
@@ -58,19 +59,23 @@ while True:
     if vic("X"):
         print ("Player 1 wins!")
         print_board()
+        time.sleep(5)
         break
     elif tie():
         print("Match is a tie")
         print_board()
+        time.sleep(5)
         break
     print_board()
     player_move("O")
     if vic("O"):
         print ("Player 2 wins!")
         print_board()
+        time.sleep(5)
         break
     elif tie():
         print("Match is a tie")
+        time.sleep(5)
         print_board()
         break
     print_board()
