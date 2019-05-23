@@ -1,0 +1,76 @@
+board=[i+1 for i in range(9)]
+
+def print_board():
+    print()
+    for i in range(1,10,3):
+            print ("| {} | {} | {} |".format(board[i-1],board[i],board[i+1]))
+    print()
+
+def player_move(sym):
+    if sym == "X":
+        num=1
+    elif sym == "O":
+        num=2
+    print("Player {}'s turn".format(num))
+    loc=int(input("Please enter the location [1-9]:"))
+    if ( (loc - 1) in range (9)):
+        if ( (str(board[loc-1]).strip() != "X") and (str(board[loc-1]).strip() != "O") ):
+            board[loc-1]=sym
+        else:
+            print ("Location already used, please choose any vacant location")
+            player_move(sym)
+    else:
+        print ("The location value entered is not in the range mentioned. Please enter a valid number from [1-9]")
+        player_move(sym)
+
+def vic(sym):
+    if (str(board[0])==sym and str(board[1])==sym and str(board[2])== sym) or \
+       (str(board[3])==sym and str(board[4])==sym and str(board[5])== sym) or \
+       (str(board[6])==sym and str(board[7])==sym and str(board[8])== sym) or \
+       (str(board[0])==sym and str(board[3])==sym and str(board[6])== sym) or \
+       (str(board[1])==sym and str(board[4])==sym and str(board[7])== sym) or \
+       (str(board[2])==sym and str(board[5])==sym and str(board[8])== sym) or \
+       (str(board[0])==sym and str(board[4])==sym and str(board[8])== sym) or \
+       (str(board[2])==sym and str(board[4])==sym and str(board[6])== sym):
+        return True                                               
+    else:
+        return False
+
+def tie():
+    count=0
+    for i in range(9):
+       # print(i)
+        if (board[i-1] == "X" or board[i-1] == "O"):
+            count+=1
+        else:
+            break
+    #print(count)
+    if( count == 9 ):
+        return True
+    else:
+        return False
+            
+print ("Welcome to X and Os Game")
+print ("Player 1 to play with X and player 2 to play with O. Please check the board below")
+print_board()
+while True:
+    player_move("X")
+    if vic("X"):
+        print ("Player 1 wins!")
+        print_board()
+        break
+    elif tie():
+        print("Match is a tie")
+        print_board()
+        break
+    print_board()
+    player_move("O")
+    if vic("O"):
+        print ("Player 2 wins!")
+        print_board()
+        break
+    elif tie():
+        print("Match is a tie")
+        print_board()
+        break
+    print_board()
