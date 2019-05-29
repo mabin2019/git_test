@@ -22,34 +22,48 @@ snake_loc=[13,29,43,67,78,81,94,98]
 snake_end_loc=[6,4,11,42,26,64,86,80]
 ladder_loc=[9,20,34,46,58,70,83]
 ladder_end_loc=[36,65,48,73,77,88,96]
+np=1
+
+def game_mode():
+    np=input("Please choose from below:\n 1. vs Player(s)\n 2. vs Computer\nEnter your choice: ")
+    if ((np != "1") and (np != "2")):
+        print("Please choose either 1 or 2. Try again!")
+        game_mode()
+    np=int(np)
+    return np
 
 def player_input():
     i=1
-    num_play=input("Enter the number of players: ")
-    if ( int(num_play) < 2 ):
-        print ("Number of players should be more than 1!")
-        player_input()
-    else:
-        while ( i <= int(num_play) ):
+    if (mode == 1):
+        num_play=input("Enter the number of players: ")
+        if ( int(num_play) < 2 ):
+            print ("Number of players should be more than 1!")
+            player_input()
+        else:
+            while ( i <= int(num_play) ):
+                players.append(str(i))
+                i+=1
+            print ("Game starting with {} players".format(num_play))
+    elif (mode == 2):
+        while ( i <= 2 ):
             players.append(str(i))
-            i+=1
-        #print ("There are {} players in this game.\nWill be named as below".format(num_play))
-        print ("Game starting with {} players".format(num_play))
-        #for j in players:
-         #   print (j)
-
+            i=i+1
+        print ("Game starting single player mode")
+        
+ 
 def player_init():
     for j in players:
         play_posn.append(int(0))
-    #for k in play_posn:
-      #  print(k)
 
 def player_move(n):
     n=int(n)
-    print ("Player {}'s turn - Currently at {}".format(n,play_posn[n-1]))
-    option=input ("Press enter to continue the game!. \"q/Q\" to Quit: ")
-    if (option.lower() == "q"):
-        quit()
+    if ( (mode == 1) or ((mode == 2) and (n != 2)) ):
+        print ("Player {}'s turn - Currently at {}".format(n,play_posn[n-1]))
+        option=input ("Press enter to continue the game!. \"q/Q\" to Quit: ")
+        if (option.lower() == "q"):
+            quit()
+    elif ((mode == 2) and (n == 2)):
+        print ("Computer's turn - Currently at {}".format(play_posn[1]))
     dice=int(random.randint(1,6))
     if (play_posn[n-1] == 0):
         if dice == 6:
@@ -67,16 +81,17 @@ def player_move(n):
             play_posn[n-1]=play_posn[n-1]
             print ("You got a {} but position would remain at {}" .format(dice,play_posn[n-1]))
         if play_posn[n-1] in snake_loc:
-            print("Ohh - Player {}! U got into a snake at {} number".format(n,play_posn[n-1]))
+            print("Ohh! U got into a snake at {} number".format(play_posn[n-1]))
             loc=snake_loc.index(play_posn[n-1])
             play_posn[n-1]=snake_end_loc[loc]
-            print("Player {} currently in {}".format(n,play_posn[n-1]))
+            print("Player currently in {}".format(play_posn[n-1]))
         elif play_posn[n-1] in ladder_loc:
-            print("Yaayyy - Player {}! U got a ladder at {} number".format(n,play_posn[n-1]))
+            print("Yaayyy! U got a ladder at {} number".format(play_posn[n-1]))
             loc=ladder_loc.index(play_posn[n-1])
             play_posn[n-1]=ladder_end_loc[loc]
-            print("Player {} currently in {}".format(n,play_posn[n-1]))
-        
+            print("Player currently in {}".format(play_posn[n-1]))
+mode=game_mode()
+
 player_input()
 print_board()
 player_init()
@@ -88,13 +103,14 @@ while c != 1:
         player_move(turn)
         print()
         if (int(100) in play_posn):
-            #print("100 Reached!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             c=1;
             break;
 winner=play_posn.index(100)
-print("Player {} has won".format(players[winner]))
+if (mode ==1):
+    print("Player {} has won".format(players[winner]))
+else:
+    if (winner == 0 ):
+        print("Congratulations Player 1. You have won")
+    elif (winner == 1):
+        print("Computer won. Better luck next time")
 time.sleep(5)
-#for a in players:
- #   print (a)
-#for b in play_posn:
- #   print (b)
